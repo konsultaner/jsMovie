@@ -1,37 +1,37 @@
 {
-"name": "jsMovie",
-"title": "jsMovie",
-"description": "jQuery plugin for image sequence animation. Used for png-animation or 3D product visualization",
-"keywords": [
-"image",
-"movie",
-"video",
-"3D",
-"animation"
-],
-"version": "1.4.3b",
-"author": {
-"name": "Richard Burkhardt",
-"url": "http://burkhardt-schmidt.com"
-},
-"maintainers": [
-{
-"name": "Richard Burkhardt",
-"email": "richard@burkhardt-schmidt.com",
-"url": "http://burkhardt-schmidt.com"
-}
-],
-"licenses": [
-{
-"type": "LGPL",
-"url": "http://www.gnu.org/licenses/lgpl.html"
-}
-],
-"bugs": "https://github.com/richidd/jsMovie/issues",
-"homepage": "http://jsmovie.burkhardt-medienproduktion.de",
-"docs": "https://github.com/richidd/jsMovie",
-"download": "http://code.jquery.com/#jsMovie",
-"dependencies": {
-"jquery": ">=1.6.1"
-}
+    "name": "jsMovie",
+    "title": "jsMovie",
+    "description": "jQuery plugin for image sequence animation. Mainly used for png-animation or 3D product visualization",
+    "keywords": [
+        "image",
+        "movie",
+        "video",
+        "3D",
+        "animation"
+    ],
+    "version": "1.4.3b",
+    "author": {
+        "name": "Richard Burkhardt",
+        "url": "http://burkhardt-schmidt.com"
+    },
+    "maintainers": [
+        {
+            "name": "Richard Burkhardt",
+            "email": "richard@burkhardt-schmidt.com",
+            "url": "http://burkhardt-schmidt.com"
+        }
+    ],
+    "licenses": [
+        {
+            "type": "LGPL",
+            "url": "http://www.gnu.org/licenses/lgpl.html"
+        }
+    ],
+    "bugs": "https://github.com/richidd/jsMovie/issues",
+    "homepage": "http://jsmovie.burkhardt-medienproduktion.de",
+    "docs": "https://github.com/richidd/jsMovie",
+    "download": "http://code.jquery.com/#jsMovie",
+    "dependencies": {
+        "jquery": ">=1.6.1"
+    }
 }
