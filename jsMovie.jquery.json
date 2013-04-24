@@ -30,7 +30,7 @@
     "bugs": "https://github.com/richidd/jsMovie/issues",
     "homepage": "http://jsmovie.burkhardt-medienproduktion.de",
     "docs": "https://github.com/richidd/jsMovie",
-    "download": "http://code.jquery.com/#jsMovie",
+    "download": "http://code.google.com/p/jsmovie/",
     "dependencies": {
         "jquery": ">=1.6.1"
     }

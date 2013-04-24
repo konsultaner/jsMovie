@@ -1,8 +1,8 @@
-jsMovie v 1.4.3b
+jsMovie v 1.4.4
 =======
 
-Burkhardt & Schmidt Medienkommunikation GbR - Richard Burkhardt
-version 1.4.3b
+Konsultaner GmbH & Co. KG - Richard Burkhardt
+version 1.4.4
 
 This is a jQuery-plugin for jQuery 1.4+ (tested). This plugin enables you
 to play image sequences without flash or HTML5 with the benefit of playing
@@ -39,41 +39,42 @@ SETTINGS
 @param loadParallel 	- integer value that represents the amount of pictures that are parallely loaded
 @param repeat		- boolean value enables or disables the auto repeat function
 @param playOnLoad	- boolean value. if set to true the video atomaticly starts to play after the frames are loaded
+@param performStop		-	boolean value. if set to true the video doesn't stop and return to the first frame. It will pause
 @param playBackwards	- boolean value. if set to true the video plays backwards
 @param showPreLoader	- boolean value. if set to true the preloader will be displayed
 @param verbose		- boolean value. if set to true the player will trigger the verbose event
 
 METHODS
 =====================================================================================================================
-init 	      -	initialises the plugin	- $(".movie").jsMovie({});
-option	      -	sets an option	- $(".movie").jsMovie("option","repeat",true);
-realFps	      -	returns the real frames pre second	- $(".movie").jsMovie("realFps");
-play	      - $(".movie").jsMovie("play");
-              - $(".movie").jsMovie("play",1,80,false,false);
-pause	      - $(".movie").jsMovie("pause");
-stop	      - $(".movie").jsMovie("stop");
-playUntil     - $(".movie").jsMovie("playUntil",10); !DEPRECATED - use play instead
-nextFrame     - $(".movie").jsMovie("nextFrame");
-previousFrame - $(".movie").jsMovie("previousFrame");
-playClip      - $(".movie").jsMovie("playClip","startClip");
-              - $(".movie").jsMovie("playClip",clip);
-              - $(".movie").jsMovie("playClip",function(){return {start:10,end:20,pause:1000} });
-              - $(".movie").jsMovie("playClip",3);
-playClip      - $(".movie").jsMovie("playClips");
-addClip       - $(".movie").jsMovie("addClip","startClip",4,13,1000); - defines a clip with start frame 4 and end frame 12 with a pause of 1 second in the end
-getClip       - $(".movie").jsMovie("addClip"); - returns the clip object
-removeClip    - $(".movie").jsMovie("removeClip","startClip"); - returns an array with the clip objects
-getClipQueue  - $(".movie").jsMovie("getClipQueue")
-gotoFrame     - $(".movie").jsMovie("gotoFrame",20);
-destroy	      - $(".movie").jsMovie("destroy");
-throwError    - $(".movie").jsMovie("throwError",1);
+`init` 	        - initialises the plugin	- $(".movie").jsMovie({});
+`option`	    - sets an option	- $(".movie").jsMovie("option","repeat",true);
+`realFps`	    - returns the real frames pre second	- $(".movie").jsMovie("realFps");
+`play`	        - $(".movie").jsMovie("play");
+                - $(".movie").jsMovie("play",1,80,false,false);
+`pause`	        - $(".movie").jsMovie("pause");
+`stop`	        - $(".movie").jsMovie("stop");
+`playUntil`     - $(".movie").jsMovie("playUntil",10); !DEPRECATED - use play instead
+`nextFrame`     - $(".movie").jsMovie("nextFrame");
+`previousFrame` - $(".movie").jsMovie("previousFrame");
+`playClip`      - $(".movie").jsMovie("playClip","startClip");
+                - $(".movie").jsMovie("playClip",clip);
+                - $(".movie").jsMovie("playClip",function(){return {start:10,end:20,pause:1000} });
+                - $(".movie").jsMovie("playClip",3);
+`playClip`      - $(".movie").jsMovie("playClips");
+`addClip`       - $(".movie").jsMovie("addClip","startClip",4,13,1000); - defines a clip with start frame 4 and end frame 12 with a pause of 1 second in the end
+`getClip`       - $(".movie").jsMovie("addClip"); - returns the clip object
+`removeClip`    - $(".movie").jsMovie("removeClip","startClip"); - returns an array with the clip objects
+`getClipQueue`  - $(".movie").jsMovie("getClipQueue")
+`gotoFrame`     - $(".movie").jsMovie("gotoFrame",20);
+`destroy`	    - $(".movie").jsMovie("destroy");
+`throwError`    - $(".movie").jsMovie("throwError",1);
 
 EVENTS
 =====================================================================================================================
-play		- is triggered when the movie starts playing
-pause		- is triggered when the movie pauses
-stop		- is triggered when the movie stops
-ended		- is triggered when a clip played its last frame
-playing		- is triggered when the movie enters a frame
-loaded		- is triggered when the movie has finished its loading process
-verbose		- is triggered when the movie outputs a verbose, the callback has an extra argument like function(e,output){} which contains the text
+  `play`		- is triggered when the movie starts playing
+  `pause`		- is triggered when the movie pauses
+  `stop`		- is triggered when the movie stops
+  `ended`		- is triggered when a clip played its last frame
+  `playing`	    - is triggered when the movie enters a frame
+  `loaded`	    - is triggered when the movie has finished its loading process
+  `verbose`	    - is triggered when the movie outputs a verbose, the callback has an extra argument like function(e,output){} which contains the text
