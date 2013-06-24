@@ -564,6 +564,15 @@
                 }
                 $(self).data("realFpsTimeStamp",(new Date()).getTime());
 
+                // Check actual FPS to see if we should skip frames
+                // If we're playing at less than 75% of desired FPS, start skipping to keep up
+                actualPlayRate = 1;
+                realFps = $(self).data("realFps");
+                desiredFps = $(self).data("settings").fps;
+                if ( realFps < (desiredFps * .75) ) {
+                    actualPlayRate = realFps / desiredFps;
+                }
+
                 // play frames
                 if($(self).data("settings").playBackwards){
                     if($(self).data("currentFrame").data('frame') == fromFrame && !repeat){
@@ -576,7 +585,14 @@
                     }else{
                         $(self).trigger('playing');
                         if($(self).data("currentFrame").data('frame') != fromFrame){
+                            maxLoops = 0;
+	                        while (actualPlayRate <= 1 && maxLoops < 10) {
                             methods.previousFrame.apply($(self));
+                                // Prevent the playhead from going off the end and looping
+                        		if ($(self).data('currentFrame').data('frame') === fromFrame) { break; }
+                        		actualPlayRate += actualPlayRate;
+		                        maxLoops++;
+                        	}
                         }else{
                             methods.gotoFrame.apply($(self),[toFrame]);
                         }
@@ -592,7 +608,14 @@
                     }else{
                         $(self).trigger('playing');
                         if($(self).data("currentFrame").data('frame') != toFrame){
+	                        maxLoops = 0;
+                            while (actualPlayRate <= 1 && maxLoops < 10) {
                             methods.nextFrame.apply($(self));
+                                // Prevent the playhead from going off the end and looping
+                            	if ($(self).data('currentFrame').data('frame') === toFrame) { break; }
+                            	actualPlayRate += actualPlayRate;
+	                            maxLoops++;
+                           }
                         }else{
                             methods.gotoFrame.apply($(self),[fromFrame]);
                         }
