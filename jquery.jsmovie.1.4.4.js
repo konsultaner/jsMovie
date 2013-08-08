@@ -1,78 +1,27 @@
 /**
- *	jsMovie
- *	@author Konsultaner GmbH & Co. KG - Richard Burkhardt
- *	@version 1.4.4
+ * jsMovie
  *
- *	This is a jQuery-plugin for jQuery 1.4+ (tested). This plugin enables you
- *	to play image sequences without flash or HTML5 with the benefit of playing
- *	your movies backwards and having PNG images animated.
  *
- *	@TODO: streaming of content
- *	@TODO: html5 / canvas for mobile devices and graphic acceleration (research)
- *	@TODO: preload verbose
  *
- *	SETTINGS
- *	@param images	-	array of images that are played in this order ! important image names my not contain any spaces
- *	@param sequence	-	string like image####.jpg which automatically fills the images array,
- *						image#.jpg would render like image123.jpg
- *						image#####.jpg would render like image00123.jpg ! important image names my not contain any spaces
- *	@param from		-	integer value that defines the start of the sequence
- *	@param to		-	integer value that defines the end of the sequence
- *	@param step		-	integer value that defines the step length of the sequence. 2 would render every second frame
- *	@param folder	-	string that contains the image folder
- *	@param grid		-	object that contains the structure of an image, i.e. {height:800,width:600,rows:1,columns:1}
- *	@param grid.height	-	integer value that represents the image height of the resulting frame in a multi-frame image
- *	@param grid.width	-	integer value that represents the image width of the resulting frame in a multi-frame image
- *	@param grid.rows	-	integer value that represents the number of frame rows in a multi-frame image
- *	@param grid.columns	-	integer value that represents the number of frame columns in a multi-frame image
- *	@param loader	-	object that contains the parameters for the image preloader
- *	@param loader.path		-	string that contains the preloader image path
- *	@param loader.height	-	integer value that represents the preloader height
- *	@param loader.width		-	integer value that represents the preloader width
- *	@param loader.rows		-	integer value that represents the number of frame rows in the multi-frame preloader image
- *	@param loader.columns	-	integer value that represents the number of frame columns in the multi-frame preloader image
- *	@param fps		-	float value that represents the frames per second rate
- *	@param width	-	integer value that scales the target frame to the wanted player width
- *	@param height	-	integer value that scales the target frame to the wanted player height
- *	@param loadParallel - integer value that represents the amount of pictures that are parallel loaded
- *	@param repeat	-	boolean value enables or disables the auto repeat function
- *	@param playOnLoad		-	boolean value. if set to true the video automatically starts to play after the frames are loaded
- *	@param performStop		-	boolean value. if set to true the video doesn't stop and return to the first frame. It will pause
- *	@param playBackwards	-	boolean value. if set to true the video plays backwards
- *	@param showPreLoader	-	boolean value. if set to true the preloader will be displayed
- *	@param verbose	-	boolean value. if set to true the player will trigger the verbose event
+ * This is a jQuery-plugin for jQuery 1.4+ (tested). This plugin enables you
+ * to play image sequences without flash or HTML5 with the benefit of playing
+ * your movies backwards and having PNG images animated.
  *
- *	METHODS
- *	init 	      -	initialises the plugin	- $(".movie").jsMovie({});
- *	option	      -	sets an option	- $(".movie").jsMovie("option","repeat",true);
- *	realFps	      -	returns the real frames pre second	- $(".movie").jsMovie("realFps");
- *	play	      - $(".movie").jsMovie("play");
- *                - $(".movie").jsMovie("play",1,80,false,false);
- *	pause	      - $(".movie").jsMovie("pause");
- *	stop	      - $(".movie").jsMovie("stop");
- *	nextFrame	  - $(".movie").jsMovie("nextFrame");
- *	previousFrame - $(".movie").jsMovie("previousFrame");
- *	playClip	  - $(".movie").jsMovie("playClip","startClip");
- *                - $(".movie").jsMovie("playClip",clip);
- *                - $(".movie").jsMovie("playClip",function(){return {start:10,end:20,pause:1000} });
- *                - $(".movie").jsMovie("playClip",3);
- *	playClips	  - $(".movie").jsMovie("playClips");
- *  addClip       - $(".movie").jsMovie("addClip","startClip",4,13,1000); - defines a clip with start frame 4 and end frame 12 with a pause of 1 second in the end
- *  getClip       - $(".movie").jsMovie("addClip"); - returns the clip object
- *  removeClip    - $(".movie").jsMovie("removeClip","startClip"); - returns an array with the clip objects
- *  getClipQueue  - $(".movie").jsMovie("getClipQueue")
- *	gotoFrame	  - $(".movie").jsMovie("gotoFrame",20);
- *	destroy	      - $(".movie").jsMovie("destroy");
- *	throwError	  - $(".movie").jsMovie("throwError",1);
  *
- *	EVENTS
- *	play	-	is triggered when the movie starts playing
- *	pause	-	is triggered when the movie pauses
- *	stop	-	is triggered when the movie stops
- *	ended	-	is triggered when a clip played its last frame
- *	playing	-	is triggered when the movie enters a frame
- *	loaded	-	is triggered when the movie has finished its loading process
- *	verbose	-	is triggered when the movie outputs a verbose, the callback has an extra argument like function(e,output){} which contains the text
+ *      EVENTS
+ *      play	-	is triggered when the movie starts playing
+ *      pause	-	is triggered when the movie pauses
+ *      stop	-	is triggered when the movie stops
+ *      ended	-	is triggered when a clip played its last frame
+ *      playing	-	is triggered when the movie enters a frame
+ *      loaded	-	is triggered when the movie has finished its loading process
+ *      verbose	-	is triggered when the movie outputs a verbose, the callback has an extra argument like function(e,output){} which contains the text
+ *
+ * @author Konsultaner GmbH & Co. KG - Richard Burkhardt
+ * @version 1.4.4
+ * @TODO: streaming of content
+ * @TODO: html5 / canvas for mobile devices and graphic acceleration (research)
+ * @TODO: preload verbose
  **/
 
 (function($) {
@@ -85,7 +34,7 @@
         step : 1,
         folder : "pic/",
         grid: {height:800,width:600,rows:1,columns:1},
-        loader: {path:"img/loader2.png",height:50,width:50,rows:2,columns:4},
+        loader: {path:"img/loader4x4.png",height:40,width:40,rows:4,columns:4},
         fps: 12,
         width: 640,
         height: 480,
@@ -101,7 +50,12 @@
 
     var methods = {
         /**
-         * @param options
+         * init
+         *
+         * Initializes the plugin
+         *
+         * @param {*} options An object of option values to override the defaults
+         * @return {*} The current initialized element
          */
         init : function(options) {
 
@@ -123,7 +77,7 @@
                     if($(this).data("settings").sequence !== ''){
                         $(this).data("settings").images = [];
                         var findZero;
-                        for(var sequence_no = $(this).data("settings").from; sequence_no <= $(this).data("settings").to; sequence_no = sequence_no+$(this).data("settings").step){
+                        for(var sequence_no = parseInt($(this).data("settings").from); sequence_no <= parseInt($(this).data("settings").to); sequence_no = sequence_no+parseInt($(this).data("settings").step)){
                             var digits = 1;
                             if(sequence_no > 0){
                                 digits = (Math.floor(Math.log(sequence_no)/Math.log(10))+1);
@@ -167,7 +121,7 @@
                     $(this).bind("pause",pause_movie_event);
 
                     //show first frame
-                    $(this).data("frame0").show();
+                    $(this).data("frame0") && $(this).data("frame0").show();
                     $(this).data("currentFrame",$(this).data("frame0"));
                     $(this).data("currentFrame").css({'background-image':'url("'+$(this).data("settings").folder+$(this).data("settings").images[0]+'")'});
 
@@ -193,8 +147,52 @@
         },
 
         /**
-         * @param option
-         * @param value
+         * option
+         *
+         * This Method allows you to Set any option at runtime like
+         *
+         *      $(".movie").jsMovie("option","repeat",true);
+         *
+         * These are Possible options and their defaults
+         *
+         *      {
+         *          images : [], // array of images that are played in this order ! important image names my not contain any spaces
+         *          sequence : '', // string like image####.jpg which automatically fills the images array,
+         *						   // image#.jpg would render like image123.jpg
+         *						   // image#####.jpg would render like image00123.jpg ! important image names my not contain any spaces
+         *          from : 0, // integer value that defines the start of the sequence
+         *          to : 1, // integer value that defines the end of the sequence
+         *          step : 1, // integer value that defines the step length of the sequence. 2 would render every second frame
+         *          folder : "pic/", // string that contains the image folder
+         *          grid: { // object that contains the structure of an image, i.e. {height:800,width:600,rows:1,columns:1}
+         *              width:600, // integer value that represents the image width of the resulting frame in a multi-frame image
+         *              height:800, // integer value that represents the image height of the resulting frame in a multi-frame image
+         *              columns:1 // integer value that represents the number of frame columns in a multi-frame image
+         *              rows:1, // integer value that represents the number of frame rows in a multi-frame image
+         *          },
+         *          loader: { // object that contains the parameters for the image preloader
+         *              path:"img/loader4x4.png", // string that contains the preloader image path
+         *              width:40, // integer value that represents the preloader width
+         *              height:40, // integer value that represents the preloader height
+         *              columns:4 // integer value that represents the number of frame columns in the multi-frame preloader image
+         *              rows:4, // integer value that represents the number of frame rows in the multi-frame preloader image
+         *          },
+         *          fps: 12, // float value that represents the frames per second rate
+         *          width: 640, // integer value that scales the target frame to the wanted player width
+         *          height: 480, // integer value that scales the target frame to the wanted player height
+         *          loadParallel: 1, // integer value that represents the amount of pictures that are parallely loaded
+         *          repeat:true, // boolean value enables or disables the auto repeat function
+         *          playOnLoad:false, // boolean value. if set to true the video automatically starts to play after the frames are loaded
+         *          performStop:true, // boolean value. if set to true the video doesn't stop and return to the first frame. It will pause
+         *          playBackwards:false, // boolean value. if set to true the video plays backwards
+         *          showPreLoader:false, // boolean value. if set to true the preloader will be displayed
+         *          verbose:true, // boolean value. if set to true the player will trigger the verbose event
+         *          clipQueue:[] // a list of clips that are passed on initialization
+         *        }
+         *
+         * @param {String} option The option key
+         * @param {String} value The option value
+         * @return {*}
          */
         option : function (option, value){
 
@@ -208,17 +206,31 @@
         },
 
         /**
-         * Returns the real frames per second reached by the script
+         * realFps
+         *
+         * Returns the real frames per second reached by the script. If the browser is not capable of playing as much frames as wanted you can verbose it with this method
+         *
+         *      $(".movie").jsMovie("realFps");
+         *
+         * @return {float} The real frame per seconds
          */
         realFps : function(){
             return $(this).data("realFps");
         },
 
         /**
-         * @param int fromFrame The first frame
-         * @param int toFrame The last frame
-         * @param bool repeat Determine whether to loop this image sequence or not
-         * @param bool performStop Determine whether to stop or to pause after the last frame - only if repeat is set to false
+         * play
+         *
+         * Plays the movie
+         *
+         *      $(".movie").jsMovie("play");
+         *      $(".movie").jsMovie("play",1,80,false,false);
+         *
+         * @param {int} fromFrame The first frame
+         * @param {int} toFrame The last frame
+         * @param {Boolean} repeat Determine whether to loop this image sequence or not
+         * @param {Boolean} performStop Determine whether to stop or to pause after the last frame - only if repeat is set to false
+         * @return {*} The current jsMovie Object
          */
         play : function(fromFrame,toFrame,repeat,performStop){
             if(this.data("loadStatus") != "loaded"){
@@ -251,7 +263,13 @@
         },
 
         /**
+         * pause
+         *
          * Pause the image sequence
+         *
+         *      $(".movie").jsMovie("pause");
+         *
+         * @return {*} The current jsMovie Object
          */
         pause : function(){
             $(this).data("currentStatus","paused");
@@ -260,7 +278,13 @@
         },
 
         /**
+         * stop
+         *
          * Stop the image sequence -> causes it to jump to frame 1
+         *
+         *      $(".movie").jsMovie("stop");
+         *
+         * @return {*} The current jsMovie Object
          */
         stop : function(){
             $(this).data("currentStatus","stopped");
@@ -269,8 +293,14 @@
         },
 
         /**
+         * gotoFrame
+         *
          * Jumps to a certain frame
-         * @param int frame The frame to jump to
+         *
+         *      $(".movie").jsMovie("gotoFrame",1);
+         *
+         * @param {int} frame The frame to jump to
+         * @return {*} The current jsMovie Object
          */
         gotoFrame : function(frame){
             var self = this;
@@ -291,7 +321,13 @@
         },
 
         /**
+         * nextFrame
+         *
          * Go to the next frame
+         *
+         *      $(".movie").jsMovie("nextFrame");
+         *
+         * @return {*} The current jsMovie Object
          */
         nextFrame : function(){
             if($(this).data("currentFrame").next('.jsMovieFrame').length == 0){
@@ -307,7 +343,13 @@
         },
 
         /**
+         * previousFrame
+         *
          * Go to the next previous frame
+         *
+         *      $(".movie").jsMovie("previousFrame");
+         *
+         * @return {*} The current jsMovie Object
          */
         previousFrame : function(){
             if($(this).data("currentFrame").data('frame') != 1){
@@ -323,10 +365,23 @@
         },
 
         /**
+         * playClip
+         *
          * Plays a certain defined clip
-         * @param string clip The name of the clip
-         * @param bool repeat Determine whether to loop this image sequence or not
-         * @param bool performStop Determine whether to stop or to pause after the last frame - only if repeat is set to false
+         *
+         *      // Plays a clip by name
+         *      $(".movie").jsMovie("playClip","startClip");
+         *      // Plays a clip by instance
+         *      $(".movie").jsMovie("playClip",clip);
+         *      // Plays a clip by instance returned by a anonymous function
+         *      $(".movie").jsMovie("playClip",function(){return {start:10,end:20,pause:1000} });
+         *      // Plays the third clip in the clip queue
+         *      $(".movie").jsMovie("playClip",3);
+         *
+         * @param {String} clip The name of the clip
+         * @param {Boolean} repeat Determine whether to loop this image sequence or not
+         * @param {Boolean} performStop Determine whether to stop or to pause after the last frame - only if repeat is set to false
+         * @return {*} The current jsMovie Object
          */
         playClip : function(clip,repeat,performStop){
             if(repeat === undefined){
@@ -375,7 +430,13 @@
         },
 
         /**
+         * playClips
+         *
          * Plays all clips after another
+         *
+         *      $(".movie").jsMovie("playClips");
+         *
+         * @return {*} The current jsMovie Object
          */
         playClips : function(){
             var self = this;
@@ -426,11 +487,19 @@
         },
 
         /**
-         * @param string name The name of the clip
-         * @param int start The starting frame
-         * @param int end The end frame
-         * @param bool pause Declare a pause after the clip before playing the next one
-         * @param int insertAt The index where to insert the clip in the clip queue
+         * addClip
+         *
+         * Add a clip to the clip queue
+         *
+         *      // Defines a clip with start frame 4 and end frame 12 with a pause of 1 second in the end
+         *      $(".movie").jsMovie("addClip","startClip",4,13,1000);
+         *
+         * @param {String} name The name of the clip
+         * @param {int} start The starting frame
+         * @param {int} end The end frame
+         * @param {Boolean} pause Declare a pause after the clip before playing the next one
+         * @param {int} insertAt The index where to insert the clip in the clip queue
+         * @return {*} The current jsMovie Object
          */
         addClip : function(name,start,end,pause,insertAt){
             if(pause === undefined){
@@ -455,8 +524,14 @@
         },
 
         /**
-         * Get The clip object by name
-         * @param string name The clip objects name
+         * getClip
+         *
+         * Get The clip object by its name
+         *
+         *      $(".movie").jsMovie("getClip");
+         *
+         * @param {String} name The clip objects name
+         * @return {*} A clip object
          */
         getClip : function(name){
             for(var i in $(this).data("settings").clipQueue){
@@ -468,8 +543,15 @@
         },
 
         /**
-         * deletes a clip object
-         * @param object|string clip
+         * removeClip
+         *
+         * Deletes a clip object by instance or name
+         *
+         *      $(".movie").jsMovie("removeClip","startClip");
+         *      $(".movie").jsMovie("removeClip",clip);
+         *
+         * @param {Object|String} clip
+         * @return {*} The current jsMovie Object
          */
         removeClip : function(clip){
             for(var i in $(this).data("settings").clipQueue){
@@ -481,14 +563,24 @@
         },
 
         /**
-         * @return array An array of objects
+         * getClipQueue
+         *
+         * Returns all the clip objects
+         *
+         *      $(".movie").jsMovie("getClipQueue");
+         *
+         * @return {Array} An array of objects
          */
         getClipQueue : function(){
             return $(this).data("settings").clipQueue;
         },
 
         /**
-         * destroys this
+         * destroy
+         *
+         * Destroys the plugin behaviour and resets the html element to its previous state
+         *
+         *      $(".movie").jsMovie("destroy");
          */
         destroy : function(){
             return this.each(function(){
@@ -497,11 +589,17 @@
                 clearInterval($(this).data("playingInterval"));
                 $(this).removeData();
             });
-
         },
 
         /**
-         * @param int errno The error that is to be thrown
+         * throwError
+         *
+         * Lets you throw an error by error number
+         *
+         *      $(".movie").jsMovie("throwError",1);
+         *
+         * @param {int} errno The error that is to be thrown
+         * @return {*} The current jsMovie Object
          */
         throwError : function(errno){
             var error = "";
@@ -531,7 +629,7 @@
 
     };
 
-    /*Event handler*/
+    // ----------------------- Event handler
     function play_movie_event(e, fromFrame, toFrame, repeat, performStop){
 
         if(fromFrame === undefined || fromFrame < 1){
@@ -615,7 +713,7 @@
         clearInterval($(this).data("playingInterval"));
     }
 
-    /*helper*/
+    // ----------------- helper
     function preloadImages(imageToLoad){
 
         if(imageToLoad == undefined){
@@ -659,7 +757,7 @@
             refreshLoaderPosition.apply($(self));
         }
         curImg.src = $(this).data("settings").folder+$(this).data("settings").images[imageToLoad-1];
-        /*FOR THE BROWSERS THAT DON'T JUST PRELOAD ON INSTANTIATION LIKE OPERA,CHROME - THEY ONLY CACHE VISIBLE BACKGROUND IMAGES*/
+        // ---------- FOR THE BROWSERS THAT DON'T JUST PRELOAD ON INSTANTIATION LIKE OPERA,CHROME - THEY ONLY CACHE VISIBLE BACKGROUND IMAGES
         $('#jsMovie_image_preload_container').append(curImg);
         $(curImg).css({height:"1px",width:"1px"});
 
@@ -672,8 +770,8 @@
                 .children(".loaderOverlay")
                 .css({"background-color":"black",
                     opacity:0.8,
-                    height:this.height()+"px",
-                    width:this.width()+"px",
+                    height:this.outerHeight(false)+"px",
+                    width:this.outerWidth(false)+"px",
                     position:'absolute',
                     top:this.offset().top+"px",
                     left:this.offset().left+"px"});
@@ -714,7 +812,6 @@
     }
 
     $.fn.jsMovie = function(method) {
-
         if ( methods[method] ) {
             return methods[method].apply(this, Array.prototype.slice.call( arguments, 1 ));
         } else if ( typeof method === 'object' || ! method ) {
@@ -722,7 +819,6 @@
         } else {
             $.error( 'Method ' +  method + ' does not exist on jQuery.jsMovie' );
         }
-
     };
 
 })(jQuery);

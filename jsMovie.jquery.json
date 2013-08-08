@@ -9,16 +9,16 @@
         "3D",
         "animation"
     ],
-    "version": "1.4.3b",
+    "version": "1.4.4",
     "author": {
         "name": "Richard Burkhardt",
-        "url": "http://burkhardt-schmidt.com"
+        "url": "http://konsultaner.de"
     },
     "maintainers": [
         {
             "name": "Richard Burkhardt",
-            "email": "richard@burkhardt-schmidt.com",
-            "url": "http://burkhardt-schmidt.com"
+            "email": "burkhardt@konsultaner.de",
+            "url": "http://konsultaner.de"
         }
     ],
     "licenses": [
@@ -28,9 +28,9 @@
         }
     ],
     "bugs": "https://github.com/richidd/jsMovie/issues",
-    "homepage": "http://jsmovie.burkhardt-medienproduktion.de",
-    "docs": "https://github.com/richidd/jsMovie",
-    "download": "http://code.google.com/p/jsmovie/",
+    "homepage": "http://jsmovie.konsultaner.de",
+    "docs": "http://jsmovie.konsultaner.de",
+    "download": "https://github.com/richidd/jsMovie",
     "dependencies": {
         "jquery": ">=1.6.1"
     }
