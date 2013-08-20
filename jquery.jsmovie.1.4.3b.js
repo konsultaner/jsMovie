@@ -40,7 +40,7 @@
  *	@param playBackwards	-	boolean value. if set to true the video plays backwards
  *	@param showPreLoader	-	boolean value. if set to true the preloader will be displayed
  *	@param verbose	-	boolean value. if set to true the player will trigger the verbose event
- *	@param skipFrames   boolean value. if set to true the player will skip frames if necessary to keep up with the desired frame rate.
+ *	@param skipFrames	-	boolean value. if set to true the player will skip frames if necessary to keep up with the desired frame rate.
  *
  *	METHODS
  *	init 	      -	initialises the plugin	- $(".movie").jsMovie({});
