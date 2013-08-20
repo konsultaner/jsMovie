@@ -41,6 +41,7 @@
  *	@param playBackwards	-	boolean value. if set to true the video plays backwards
  *	@param showPreLoader	-	boolean value. if set to true the preloader will be displayed
  *	@param verbose	-	boolean value. if set to true the player will trigger the verbose event
+ *	@param skipFrames   boolean value. if set to true the player will skip frames if necessary to keep up with the desired frame rate.
  *
  *	METHODS
  *	init 	      -	initialises the plugin	- $(".movie").jsMovie({});
@@ -96,7 +97,8 @@
         playBackwards:false,
         showPreLoader:false,
         verbose:true,
-        clipQueue:[]
+        clipQueue:[],
+	    skipFrames: false
     };
 
     var methods = {
@@ -564,12 +566,12 @@
                 }
                 $(self).data("realFpsTimeStamp",(new Date()).getTime());
 
-                // Check actual FPS to see if we should skip frames
+                // Check actual FPS to see if we should skip frames (if the skipFrames option is set to true)
                 // If we're playing at less than 75% of desired FPS, start skipping to keep up
                 actualPlayRate = 1;
                 realFps = $(self).data("realFps");
                 desiredFps = $(self).data("settings").fps;
-                if ( realFps < (desiredFps * .75) ) {
+                if ( $(self).data("settings").skipFrames === true && realFps < (desiredFps * .75) ) {
                     actualPlayRate = realFps / desiredFps;
                 }
 
