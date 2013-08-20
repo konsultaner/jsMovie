@@ -98,7 +98,7 @@
         showPreLoader:false,
         verbose:true,
         clipQueue:[],
-	    skipFrames: false
+        skipFrames: false
     };
 
     var methods = {
