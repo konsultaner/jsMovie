@@ -1,8 +1,8 @@
-jsMovie v 1.4.4
+jsMovie v 1.4.5
 =======
 
 Konsultaner GmbH & Co. KG - Richard Burkhardt
-version 1.4.4
+version 1.4.5
 
 This is a jQuery-plugin for jQuery 1.4+ (tested). This plugin enables you
 to play image sequences without flash or HTML5 with the benefit of playing

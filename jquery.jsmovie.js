@@ -14,11 +14,12 @@
  *      stop	-	is triggered when the movie stops
  *      ended	-	is triggered when a clip played its last frame
  *      playing	-	is triggered when the movie enters a frame
- *      loaded	-	is triggered when the movie has finished its loading process
+ *      loading	-	is triggered whenever a frame has been pre loaded $('.movie').on('loading',function(e,imagesLoaded,totalImages){})
+ *      loaded	-	is triggered when the movie has finished its pre loading process
  *      verbose	-	is triggered when the movie outputs a verbose, the callback has an extra argument like function(e,output){} which contains the text
  *
  * @author Konsultaner GmbH & Co. KG - Richard Burkhardt
- * @version 1.4.4
+ * @version 1.4.5
  * @TODO: streaming of content
  * @TODO: html5 / canvas for mobile devices and graphic acceleration (research)
  * @TODO: preload verbose
@@ -134,6 +135,7 @@
                     $('#jsMovie_event_overlay').css({width:$(self).data("settings").width, height:$(self).data("settings").height*2, 'margin-top':'-'+($(self).data("settings").height*2)+"px"});
 
                     //preload all images
+                    $(this).data("framesLoaded",0);
                     preloadImages.apply($(this));
                     //show preloader
                     animatePreloader.apply($(this));
@@ -744,7 +746,7 @@
                 $(self).data("frame"+(i+((imageToLoad-1)*framesPerImage))).css({'background-image':'url('+$(self).data("settings").folder+$(self).data("settings").images[imageToLoad-1]+')'});
                 $(self).data("frame"+(i+((imageToLoad-1)*framesPerImage))).data("loaded",true);
             }
-            //workarround to set the frame given by the goto method when the wanted frame hasn't been loaded yet - an event would dramaticly slow down FF3
+            //workaround to set the frame given by the goto method when the wanted frame hasn't been loaded yet - an event would dramaticly slow down FF3
             if($(self).data("gotoFrameOnLoaded") != undefined && Math.ceil($(self).data("gotoFrameOnLoaded")/framesPerImage) == imageToLoad){
                 var gotoFrame = $(self).data("gotoFrameOnLoaded");
                 $(self).removeData("gotoFrameOnLoaded");
@@ -752,6 +754,9 @@
             }
             //recursive call the next image to be loaded
             preloadImages.apply($(self),[imageToLoad+self.data('settings').loadParallel]);
+            //tigger loading event
+            $(self).data("framesLoaded",$(self).data("framesLoaded")+1);
+            $(self).trigger("loading",[$(self).data("framesLoaded"), self.data("settings").images.length])
             //verbose
             verboseOut.apply(self,["Image #"+(imageToLoad)+" has been loaded"]);
             refreshLoaderPosition.apply($(self));
@@ -759,8 +764,7 @@
         curImg.src = $(this).data("settings").folder+$(this).data("settings").images[imageToLoad-1];
         // ---------- FOR THE BROWSERS THAT DON'T JUST PRELOAD ON INSTANTIATION LIKE OPERA,CHROME - THEY ONLY CACHE VISIBLE BACKGROUND IMAGES
         $('#jsMovie_image_preload_container').append(curImg);
-        $(curImg).css({height:"1px",width:"1px"});
-
+        $(curImg).css({pointerEvents:"none",position:"absolute",top:"0",opacity:0.00001});
     }
 
     function animatePreloader(){
