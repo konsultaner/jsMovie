@@ -101,7 +101,7 @@
                                 $(this).append($(this).data("frame"+frameNo));
                                 $(this).data("currentFrame",$(this).data("frame"+frameNo));
                                 //hideAllFrames
-                                $(this).data("currentFrame").hide();
+                                $(this).data("currentFrame").css('visibility', 'hidden');
                                 //style image
                                 $(this).data("frame"+frameNo)
                                     .css({width:$(this).data("settings").width,
@@ -122,7 +122,7 @@
                     $(this).bind("pause",pause_movie_event);
 
                     //show first frame
-                    $(this).data("frame0") && $(this).data("frame0").show();
+                    $(this).data("frame0") && $(this).data("frame0").css('visibility', 'visible');
                     $(this).data("currentFrame",$(this).data("frame0"));
                     $(this).data("currentFrame").css({'background-image':'url("'+$(this).data("settings").folder+$(this).data("settings").images[0]+'")'});
 
@@ -312,9 +312,9 @@
                     // find the wanted frame
                     // only show frame if the image has been loaded
                     if(frame == $(this).data('frame') && $(this).data('loaded') !== undefined){
-                        $(self).find(".jsMovieFrame").hide();
+                        $(self).find(".jsMovieFrame").css('visibility', 'hidden');
                         $(self).data("currentFrame",$(this));
-                        $(self).data("currentFrame").show();
+                        $(self).data("currentFrame").css('visibility', 'visible');
                     }else{
                         $(self).data("gotoFrameOnLoaded",frame);
                     }
@@ -333,12 +333,12 @@
          */
         nextFrame : function(){
             if($(this).data("currentFrame").next('.jsMovieFrame').length == 0){
-                $(this).data("frame0").show();
-                $(this).data("currentFrame").hide();
+                $(this).data("frame0").css('visibility', 'visible');
+                $(this).data("currentFrame").css('visibility', 'hidden');
                 $(this).data("currentFrame",$(this).data("frame0"));
             }else{
-                $(this).data("currentFrame").next().show();
-                $(this).data("currentFrame").hide();
+                $(this).data("currentFrame").next().css('visibility', 'visible');
+                $(this).data("currentFrame").css('visibility', 'hidden');
                 $(this).data("currentFrame",$(this).data("currentFrame").next());
             }
             return this;
@@ -355,12 +355,12 @@
          */
         previousFrame : function(){
             if($(this).data("currentFrame").data('frame') != 1){
-                $(this).data("currentFrame").prev().show();
-                $(this).data("currentFrame").hide();
+                $(this).data("currentFrame").prev().css('visibility', 'visible');
+                $(this).data("currentFrame").css('visibility', 'hidden');
                 $(this).data("currentFrame",$(this).data("currentFrame").prev());
             }else{
-                $(this).data("currentFrame").siblings('.jsMovieFrame').last().show();
-                $(this).data("currentFrame").hide();
+                $(this).data("currentFrame").siblings('.jsMovieFrame').last().css('visibility', 'visible');
+                $(this).data("currentFrame").css('visibility', 'hidden');
                 $(this).data("currentFrame",$(this).data("currentFrame").siblings('.jsMovieFrame').last());
             }
             return this;
@@ -705,9 +705,9 @@
 
     function stop_movie_event(e){
         clearInterval($(this).data("playingInterval"));
-        $(this).find(".jsMovieFrame").hide();
+        $(this).find(".jsMovieFrame").css('visibility', 'hidden');
         $(this).data("currentFrame",$(this).data("frame0"));
-        $(this).data("currentFrame").show();
+        $(this).data("currentFrame").css('visibility', 'visible');
         $(this).data("currentStatus","stop");
     }
 
